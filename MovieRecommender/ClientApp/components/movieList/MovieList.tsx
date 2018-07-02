@@ -16,7 +16,6 @@ class MovieList extends React.Component<MovieListProps, {}> {
     
     componentDidMount() {
         const { movies } = this.props;
-        console.log(movies)
         if (!movies.length) {
             this.props.requestMovieList(this.props.movieSearchCriteria);
         }

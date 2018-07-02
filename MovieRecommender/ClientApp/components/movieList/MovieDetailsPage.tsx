@@ -35,7 +35,7 @@ class MovieDetailsPage extends React.Component<MovieDetailsPageProps, {}> {
             isLoading,
             error
         } = this.props;
-        
+        console.log(selectedMovie)
         return (
             <div className="col-sm-12 movie-detail-page-container">
                 {!selectedMovie
