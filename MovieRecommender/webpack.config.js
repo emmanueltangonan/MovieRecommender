@@ -21,6 +21,11 @@ module.exports = (env) => {
                 { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
             ]
         },
+        node: {
+            fs: 'empty',
+            net: 'empty',
+            tls: 'empty'
+        },
         plugins: [new CheckerPlugin()]
     });
 
@@ -30,7 +35,15 @@ module.exports = (env) => {
         entry: { 'main-client': './ClientApp/boot-client.tsx' },
         module: {
             rules: [
-                { test: /\.css$/, use: ExtractTextPlugin.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }) }
+                {
+                    enforce: 'pre',
+                    test: /\.css?$/,
+                    loader: 'import-glob-loader'
+                },
+                {
+                    test: /\.css$/,
+                    use: ExtractTextPlugin.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' })
+                }
             ]
         },
         output: { path: path.join(__dirname, clientBundleOutputDir) },

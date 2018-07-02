@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +19,56 @@
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\components\movieList\BrowseCriteriaBox.tsx" />
+    <None Remove="ClientApp\components\movieList\MovieDetailsPage.tsx" />
+    <None Remove="ClientApp\components\movieList\MovieList.tsx" />
+    <None Remove="ClientApp\components\movieList\MovieThumbnail.tsx" />
+    <None Remove="ClientApp\components\movieList\Stateless.tsx" />
+    <None Remove="ClientApp\components\movies\GenreDropDown.tsx" />
+    <None Remove="ClientApp\components\movies\ImdbRatingDropDown.tsx" />
+    <None Remove="ClientApp\components\movies\SpinnerCriteriaBox.tsx" />
+    <None Remove="ClientApp\components\movies\YearDropDown.tsx" />
+    <None Remove="ClientApp\components\shared\Stateless.tsx" />
+    <None Remove="ClientApp\components\SuggestedMovie.tsx" />
+    <None Remove="ClientApp\store\MovieDetailsPage\Actions.ts" />
+    <None Remove="ClientApp\store\MovieDetailsPage\index.ts" />
+    <None Remove="ClientApp\store\MovieDetailsPage\Reducers.ts" />
+    <None Remove="ClientApp\store\MovieList\Actions.ts" />
+    <None Remove="ClientApp\store\MovieList\index.ts" />
+    <None Remove="ClientApp\store\MovieList\Reducers.ts" />
+    <None Remove="ClientApp\store\Movies.ts" />
+    <None Remove="ClientApp\store\RandomMovie\actions.ts" />
+    <None Remove="ClientApp\store\RandomMovie\Reducers.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\movieList\BrowseCriteriaBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieList\MovieDetailsPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieList\Stateless.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieList\MovieList.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieList\MovieThumbnail.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movies\GenreDropDown.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movies\ImdbRatingDropDown.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movies\SpinnerCriteriaBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movies\RandomMovie.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movies\YearDropDown.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\shared\Stateless.tsx" />
+    <TypeScriptCompile Include="ClientApp\store\MovieDetailsPage\Actions.ts" />
+    <TypeScriptCompile Include="ClientApp\store\MovieDetailsPage\index.ts" />
+    <TypeScriptCompile Include="ClientApp\store\MovieDetailsPage\Reducers.ts" />
+    <TypeScriptCompile Include="ClientApp\store\MovieList\Actions.ts" />
+    <TypeScriptCompile Include="ClientApp\store\MovieList\index.ts" />
+    <TypeScriptCompile Include="ClientApp\store\MovieList\Reducers.ts" />
+    <TypeScriptCompile Include="ClientApp\store\RandomMovie\Actions.ts" />
+    <TypeScriptCompile Include="ClientApp\store\RandomMovie\index.ts" />
+    <TypeScriptCompile Include="ClientApp\store\RandomMovie\Reducers.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\components\movieDetails\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
