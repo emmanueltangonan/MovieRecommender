@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MovieRecommender.Models
 {
-    public class IMDB_1Context : DbContext
+    public partial class IMDB_1Context : DbContext
     {
         public virtual DbSet<Movie> Movie { get; set; }
         public virtual DbSet<User> User { get; set; }
-        
+        public virtual DbSet<Genre> Genre { get; set; }
+
         public IMDB_1Context(DbContextOptions<IMDB_1Context> options)
             : base(options)
         { }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(entity =>
@@ -48,6 +49,13 @@ namespace MovieRecommender.Models
                     .HasMaxLength(255);
 
                 entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Genre>(entity =>
+            {
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
             });

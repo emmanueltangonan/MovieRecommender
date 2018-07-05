@@ -1,31 +1,26 @@
 ﻿import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../store';
-import * as MoviesState from '../../store/RandomMovie';
-import MovieDetails from './MovieDetails';
+import { SearchMovieConstants } from '../../constants/constants';
 
-type ImdbRatingDropDownProps = any
-    & MoviesState.RandomMovieState        // ... state we've requested from the Redux store
-    & typeof MoviesState.actionCreators      // ... plus action creators we've requested
-    & RouteComponentProps<{}>; // ... plus incoming routing parameters
+//type ImdbRatingDropDownProps = any
+//    & MoviesState.RandomMovieState        // ... state we've requested from the Redux store
+//    & typeof MoviesState.actionCreators      // ... plus action creators we've requested
+//    & RouteComponentProps<{}>; // ... plus incoming routing parameters
 
-class ImdbRatingDropDown extends React.Component<ImdbRatingDropDownProps, {}> {
-
-    handleOnChange(e: any) {
-        e.preventDefault();
-        let rating = e.currentTarget.textContent;
-        rating = rating == 'All' ? 0 : rating.substring(0, rating.length - 1);
-        //this.props.setRating(rating);
-        this.props.setSpinnerCriteria({
-            ...this.props.movieSearchCriteria,
-            rating: rating
-        });
-    }
-
+//class ImdbRatingDropDown extends React.Component<ImdbRatingDropDownProps, {}> {
+class ImdbRatingDropDown extends React.Component<{
+    handleOnChange: any,
+    rating: any
+}, {}> {
+    
     public render() {
-        const rating = this.props.movieSearchCriteria.rating
-        const range = 5;
+        const criterion = SearchMovieConstants.RATING;
+        const {
+            handleOnChange,
+            rating,
+        } = this.props;
+        const range = SearchMovieConstants.RATING_RANGE;
         const ratings = Array.from(new Array(range), (val, index) => 9 - index);
         const title = rating == 0 ? 'IMDB Rating: All' : !rating ? 'IMDB Rating' : 'IMDB Rating: ' + rating + '+';
         return (
@@ -44,9 +39,9 @@ class ImdbRatingDropDown extends React.Component<ImdbRatingDropDownProps, {}> {
                         <span className="caret"></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a onClick={(e) => { this.handleOnChange(e) }} href="#">All</a></li>
+                        <li><a onClick={(e) => { handleOnChange(e, criterion) }} href="#">All</a></li>
                         {ratings && ratings.map((rating: number, i: number) => (
-                            <li key={i}><a onClick={(e) => { this.handleOnChange(e) }}
+                            <li key={i}><a onClick={(e) => { handleOnChange(e, criterion) }}
                                    href="#">{rating}+
                                 </a></li>
                         ))
@@ -58,8 +53,8 @@ class ImdbRatingDropDown extends React.Component<ImdbRatingDropDownProps, {}> {
         )
     }
 }
-
-export default connect(
-    (state: ApplicationState) => state.randomMovie, // Selects which state properties are merged into the component's props
-    MoviesState.actionCreators                 // Selects which action creators are merged into the component's props
-)(ImdbRatingDropDown) as typeof ImdbRatingDropDown;
+export default ImdbRatingDropDown;
+//export default connect(
+//    (state: ApplicationState) => state.randomMovie, // Selects which state properties are merged into the component's props
+//    MoviesState.actionCreators                 // Selects which action creators are merged into the component's props
+//)(ImdbRatingDropDown) as typeof ImdbRatingDropDown;

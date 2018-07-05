@@ -24,6 +24,3 @@ export const PipeDivider: React.StatelessComponent<{}> = () => (
     </span>
 )
 
-export const FillingEmptySpaceDiv: React.StatelessComponent<{}> = () => (
-        <div className="filling-empty-space-childs"></div>
-)

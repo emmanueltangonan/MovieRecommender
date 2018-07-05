@@ -1,0 +1,31 @@
+﻿/* PAGINATOR */
+div.paginator {
+    display: flex;
+    justify-content: center;
+}
+
+ul.pagination a.pagination-active-a {
+    background-color: $green-highlight;
+    border-color: $green-highlight;
+}
+
+ul.pagination a.pagination-active-a:hover,
+ul.pagination a.pagination-active-a:focus {
+    background-color: $green-highlight;
+    border-color: $green-highlight;
+    cursor: pointer;
+    color: white;
+}
+
+.pagination > li > a, .pagination > li > span {
+    border: 1px solid $green-highlight;
+    color: $green-highlight;
+}
+
+.pagination > li > a:hover, .pagination > li > span:hover,
+.pagination > li > a:focus, .pagination > li > span:focus {
+    background-color: $green-highlight;
+    border-color: $green-highlight;
+    color: white;
+    outline: 0;
+}

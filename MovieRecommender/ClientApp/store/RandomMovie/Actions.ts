@@ -1,11 +1,11 @@
-﻿import { MovieSearchCriteria } from './';
+﻿import { RandomMovieSearchCriteria } from './';
 import { AppThunkAction } from '../';
 import { fetch, addTask } from 'domain-task';
 import * as imdb from 'imdb-api';
 
 interface RequestRandomMovieAction {
     type: 'REQUEST_RANDOM_MOVIE';
-    movieSearchCriteria: MovieSearchCriteria;
+    movieSearchCriteria: RandomMovieSearchCriteria;
 }
 
 interface ReceiveRandomMovieAction {
@@ -13,9 +13,9 @@ interface ReceiveRandomMovieAction {
     randomMovie: any;
 }
 
-interface SetSpinnerCriteria {
+interface SetSpinnerCriteriaAction {
     type: 'SET_SPINNER_CRITERIA';
-    movieSearchCriteria: MovieSearchCriteria;
+    movieSearchCriteria: RandomMovieSearchCriteria;
 }
 
 interface SetErrorAction {
@@ -28,11 +28,12 @@ interface ClearErrorAction {
 }
 
 export type KnownAction = RequestRandomMovieAction | ReceiveRandomMovieAction
-    | SetSpinnerCriteria | SetErrorAction | ClearErrorAction;
+    | SetSpinnerCriteriaAction
+    | SetErrorAction | ClearErrorAction;
 
 // ACTION CREATORS
 export const actionCreators = {
-    requestRandomMovie: (movieSearchCriteria: MovieSearchCriteria): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestRandomMovie: (movieSearchCriteria: RandomMovieSearchCriteria): AppThunkAction<KnownAction> => (dispatch, getState) => {
         console.log(movieSearchCriteria)
         let fetchTask = fetch(`api/ImdbData/RandomMovie`,
             {
@@ -72,7 +73,7 @@ export const actionCreators = {
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
         dispatch({ type: 'REQUEST_RANDOM_MOVIE', movieSearchCriteria: movieSearchCriteria });
     },
-    setSpinnerCriteria: (movieSearchCriteria: MovieSearchCriteria): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    setSpinnerCriteria: (movieSearchCriteria: RandomMovieSearchCriteria): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'SET_SPINNER_CRITERIA', movieSearchCriteria: movieSearchCriteria });
     },
     setError: (error: any): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -80,5 +81,5 @@ export const actionCreators = {
     },
     clearError: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         dispatch({ type: 'CLEAR_ERROR' });
-    }
+    },
 };

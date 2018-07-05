@@ -3,7 +3,12 @@ import { AppThunkAction } from '../';
 import { RandomMovieState } from './';
 import { KnownAction } from './Actions';
 
-const unloadedState: RandomMovieState = { randomMovie: {}, movieSearchCriteria: { genre: '', year: null, rating: null }, isLoading: false, error: null };
+const unloadedState: RandomMovieState = {
+    randomMovie: {},
+    movieSearchCriteria: { genre: '', year: null, rating: null },
+    isLoading: false,
+    error: null
+};
 
 export const reducer: Reducer<RandomMovieState> = (state: RandomMovieState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
