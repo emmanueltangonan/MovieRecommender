@@ -1,34 +1,29 @@
 ﻿import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../store';
-import * as MoviesState from '../../store/RandomMovie';
-import MovieDetails from './MovieDetails';
+import { SearchMovieConstants } from '../../constants/constants';
 
-type YearDropDownProps = any
-    & MoviesState.RandomMovieState        // ... state we've requested from the Redux store
-    & typeof MoviesState.actionCreators      // ... plus action creators we've requested
-    & RouteComponentProps<{}>; // ... plus incoming routing parameters
+//type YearDropDownProps = any
+//    & MoviesState.RandomMovieState        // ... state we've requested from the Redux store
+//    & typeof MoviesState.actionCreators      // ... plus action creators we've requested
+//    & RouteComponentProps<{}>; // ... plus incoming routing parameters
 
-class YearDropDown extends React.Component<YearDropDownProps, {}> {
-
-    handleOnChange(e: any) {
-        e.preventDefault();
-        let year = e.currentTarget.textContent;
-        year = year == 'All' ? 0 : year;
-        //this.props.setYear(year);
-        this.props.setSpinnerCriteria({
-            ...this.props.movieSearchCriteria,
-            year: year
-        });
-    }
-
+//class YearDropDown extends React.Component<YearDropDownProps, {}> {
+class YearDropDown extends React.Component<{
+    handleOnChange: any,
+    year: any,
+}, {}> {
+    
     public render() {
-        const year = this.props.movieSearchCriteria.year
+        const criterion = SearchMovieConstants.YEAR;
+        const {
+            handleOnChange,
+            year,
+        } = this.props;
         const currentYear = (new Date()).getFullYear();
         const yearRange = 100;
         const years = Array.from(new Array(yearRange), (val, index) => currentYear - (index + 1) );
-        const title = year == 0 ? 'Year : All' : !year ? 'Year' : year + ' To Present';
+        const title = year == 0 ? 'Year Released: All' : !year ? 'Year Released' : year + ' Onwards';
         return (
             <span>
                 <div className="dropdown">
@@ -45,9 +40,9 @@ class YearDropDown extends React.Component<YearDropDownProps, {}> {
                         <span className="caret"></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a onClick={(e) => { this.handleOnChange(e) }} href="#">All</a></li>
+                        <li><a onClick={(e) => { handleOnChange(e, criterion) }} href="#">All</a></li>
                         { years && years.map((year: number, i: number) => (
-                            <li key={i}><a onClick={(e) => { this.handleOnChange(e) }}
+                            <li key={i}><a onClick={(e) => { handleOnChange(e, criterion) }}
                                 href="#"
                                 >{year}</a></li>
                             ))
@@ -59,8 +54,8 @@ class YearDropDown extends React.Component<YearDropDownProps, {}> {
         )
     }
 }
-
-export default connect(
-    (state: ApplicationState) => state.randomMovie, // Selects which state properties are merged into the component's props
-    MoviesState.actionCreators                 // Selects which action creators are merged into the component's props
-)(YearDropDown) as typeof YearDropDown;
+export default YearDropDown;
+//export default connect(
+//    (state: ApplicationState) => state.randomMovie, // Selects which state properties are merged into the component's props
+//    MoviesState.actionCreators                 // Selects which action creators are merged into the component's props
+//)(YearDropDown) as typeof YearDropDown;

@@ -1,0 +1,176 @@
+﻿
+.borderless td, .borderless th {
+    border: none !important;
+}
+
+h1.movie-title {
+    margin: 0;
+    font-weight: bold;
+}
+
+div.img-container {
+    background-color: lightgray;
+    padding: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+div img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+div.sugg-movie-container {
+    padding: 0 15px 15px 15px;
+    background-color: white;
+    margin: 15px 0;
+    min-height: 500px;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+
+div.movie-details-right {
+    padding: 0 0 0 25px;
+}
+
+span.grey-out {
+    color: dimgray;
+}
+
+div.movie-details {
+    min-height: 400px;
+    padding: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.movie-details .row {
+    margin: 0;
+}
+
+img.rating-logo {
+    height: 20px;
+}
+
+div.ratings-row {
+    padding: 15px 0;
+}
+
+div.other-details {
+    padding: 0px;
+}
+
+p.movie-details-text {
+    padding: 8px;
+}
+
+div.spinner-criteria {
+    padding: 10px 0;
+    background-color: #222;
+    margin-bottom: 10px;
+}
+
+.spinner-criteria .spinner-criteria-elem-wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+button.spinner-button {
+    width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.movie-title-wrapper {
+    padding: 0;
+}
+
+div.movie-title-div {
+    padding: 0;
+}
+
+div.movie-quick-details {
+    padding: 0;
+}
+
+div.movie-action-icons {
+    padding: 3px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+div.movie-action-icons-holder {
+    min-width: 25px;
+    min-height: 25px;
+}
+
+$buttons-width: 50px;
+
+.movie-action-icons button {
+    background-color: white;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    height: 35px;
+    width: $buttons-width;
+    margin: 0 2px 5px 2px;
+    float: right;
+    transition: all .3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.movie-action-icons .seen-btn {
+    color: #5cb85c;
+    border: 2px solid #5cb85c;
+}
+
+.movie-action-icons .seen-btn {
+    color: #5cb85c;
+    border: 2px solid #5cb85c;
+}
+
+.movie-action-icons .uninterested-btn {
+    color: #d43f3a;
+    border: 2px solid #d43f3a;
+}
+
+.movie-action-icons i {
+    font-size: 18px;
+}
+
+.movie-action-icons .seen-btn:hover {
+    background-color: #5cb85c;
+    border: 2px solid #5cb85c;
+    color: white;
+}
+
+.movie-action-icons .uninterested-btn:hover {
+    background-color: #d43f3a;
+    border: 2px solid #d43f3a;
+    color: white;
+}
+
+.movie-action-icons button:hover{
+    width: 150px;
+}
+
+
+@media (max-width: 767px) {
+    h1 .movie-title {
+        font-size: 24px;
+    }
+
+    div.movie-action-icons {
+        margin: 10px 0;
+    }
+
+    div.movie-details-right {
+        padding: 0;
+    }
+    .movie-action-icons button.btn {
+        width: 150px;
+        float: none;
+    }
+    .movie-action-icons-holder{
+       text-align: center;
+    }
+}

@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
 import * as MoviesState from '../../store/RandomMovie';
-import MovieDetails from './MovieDetails';
+import MovieDetails from '../movieDetails/MovieDetails';
 import SpinnerCriteriaBox from './SpinnerCriteriaBox';
 import { Loading } from '../shared/Stateless';
 

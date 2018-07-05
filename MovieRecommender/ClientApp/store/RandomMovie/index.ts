@@ -5,11 +5,11 @@ import { reducer as r } from './Reducers';
 export interface RandomMovieState {
     isLoading: boolean;
     randomMovie: any;
-    movieSearchCriteria: MovieSearchCriteria;
+    movieSearchCriteria: RandomMovieSearchCriteria;
     error: any;
 }
 
-export interface MovieSearchCriteria {
+export interface RandomMovieSearchCriteria {
     genre: string;
     year: number | null;
     rating: number | null;

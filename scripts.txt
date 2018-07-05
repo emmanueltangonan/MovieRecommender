@@ -1,0 +1,5 @@
+Scaffold-DbContext "Server=EMAN-PC\SQLEXPRESS;Database=IMDB_1;uid=sa;password=root;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext "<ConnectionString>" Microsoft.EntityFrameworkCore.SqlServer -t <tablename> -f -OutputDir Models
+
+Scaffold-DbContext "Server=EMAN-PC\SQLEXPRESS;Database=IMDB_1;uid=sa;password=root;" Microsoft.EntityFrameworkCore.SqlServer -t Genre -f -OutputDir Models

@@ -25,7 +25,7 @@ export type KnownAction = GetMovieDetailsAction | ReceiveMovieDetailsAction | Se
 // ACTION CREATORS
 export const actionCreators = {
     getMovieDetails: (tconst: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        console.log(tconst)
+        
         dispatch({ type: 'GET_MOVIE_DETAILS' });
         let fetchTask = fetch(`api/ImdbData/Movie?tconst=${tconst}`)
             .then(response => {
@@ -47,7 +47,7 @@ export const actionCreators = {
         var promise = Promise.all(
             [fetchTask, imdbApiCall]
         ).then(function (values) {
-            console.log(values);
+            
             let movie = values[0];
             if (!movie) {
                 dispatch({ type: 'SET_ERROR', error: 'Movie not found.' });

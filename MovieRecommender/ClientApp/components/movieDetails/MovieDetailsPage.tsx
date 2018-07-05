@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
 import * as MovieDetailsPageState from '../../store/MovieDetailsPage';
-import MovieDetails from '../movies/MovieDetails';
+import MovieDetails from './MovieDetails';
 import { Loading } from '../shared/Stateless';
 
 type MovieDetailsPageProps =
@@ -14,6 +14,8 @@ type MovieDetailsPageProps =
 class MovieDetailsPage extends React.Component<MovieDetailsPageProps, {}> {
 
     componentDidMount() {
+        const imdbData = this.props.location.state.imdbData;
+        console.log(imdbData)
         let tconst = this.props.match.params.tconst || 0;
         tconst && this.props.getMovieDetails(tconst);
     }
@@ -35,7 +37,7 @@ class MovieDetailsPage extends React.Component<MovieDetailsPageProps, {}> {
             isLoading,
             error
         } = this.props;
-        console.log(selectedMovie)
+        
         return (
             <div className="col-sm-12 movie-detail-page-container">
                 {!selectedMovie

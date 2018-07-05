@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
 import * as MovieListState from '../../store/MovieList';
 import MovieThumbnail from './MovieThumbnail';
-import { FillingEmptySpaceDiv } from '../movies/Stateless';
+import { FillingEmptySpaceDiv } from './Stateless';
 import { Loading } from '../shared/Stateless';
+import BrowseCriteriaBox from './BrowseCriteriaBox';
+import Paginator from './Paginator';
+import DisplayOptions from './DisplayOptions';
 
 type MovieListProps =
     MovieListState.MovieListState        // ... state we've requested from the Redux store
@@ -13,7 +16,12 @@ type MovieListProps =
     & RouteComponentProps<{}>; // ... plus incoming routing parameters
 
 class MovieList extends React.Component<MovieListProps, {}> {
-    
+
+    constructor(props: any) {
+        super(props);
+        this.renderMovies = this.renderMovies.bind(this);
+    }
+
     componentDidMount() {
         const { movies } = this.props;
         if (!movies.length) {
@@ -21,27 +29,40 @@ class MovieList extends React.Component<MovieListProps, {}> {
         }
     }
 
+    renderMovies(movies: any, totalMoviesSearched: any) {
+        console.log(totalMoviesSearched)
+        if (totalMoviesSearched != null && totalMoviesSearched == 0) {
+            return <div>Whoops! No movies matched those criteria...</div> 
+        }else if (movies && movies.length > 0) {
+            return (
+                movies.map((movie: any, i: number) => (
+                    <MovieThumbnail key={i} movie={movie} />
+                ))
+            );
+        }
+    }
+
     public render() {
-        const { movies } = this.props;
-        console.log(movies)
+        const { movies, error, totalMoviesSearched } = this.props;
+        
         return (
+            
             <div className="col-sm-12 movie-list-container">
-                {this.props.isLoading
-                    ? <Loading />
-                    :
-                        <div className="movie-thumbnails-wrapper">
-                            {movies.map((movie: any, i: number) => (
-                                <MovieThumbnail key={i} movie={movie} />
-                            ))
-                            }
-                            <FillingEmptySpaceDiv />
-                            <FillingEmptySpaceDiv />
-                            <FillingEmptySpaceDiv />
-                            <FillingEmptySpaceDiv />
-                            <FillingEmptySpaceDiv />
-                            <FillingEmptySpaceDiv />
-                        </div>
-                }
+                <BrowseCriteriaBox />
+                <DisplayOptions />
+                <div className="movie-thumbnails-wrapper">
+                    {this.props.isLoading
+                        ? <Loading />
+                        : this.renderMovies(movies, totalMoviesSearched)
+                    }
+                    <FillingEmptySpaceDiv />
+                    <FillingEmptySpaceDiv />
+                    <FillingEmptySpaceDiv />
+                    <FillingEmptySpaceDiv />
+                    <FillingEmptySpaceDiv />
+                    <FillingEmptySpaceDiv />
+                </div>
+                <Paginator />
             </div>
         )
     }

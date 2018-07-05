@@ -6,3 +6,7 @@ export const TitleHolder: React.StatelessComponent<{ children: any }> =
             { children }
         </span>
     )
+
+export const FillingEmptySpaceDiv: React.StatelessComponent<{}> = () => (
+    <div className="filling-empty-space-childs"></div>
+)

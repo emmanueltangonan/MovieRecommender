@@ -5,9 +5,21 @@ import { KnownAction } from './Actions';
 
 const unloadedState: MovieListState = {
     movies: [],
-    movieSearchCriteria: { genre: '', year: 2000, rating: 6.0 },
+    totalMoviesSearched: null,
+    movieSearchCriteria: {
+        genre: '',
+        year: 2000,
+        rating: 6.0,
+        searchKeyword: '',
+        orderBy: '',
+        page: 1,
+        status: 'All',
+        sortBy: 'Title',
+        order: 'Ascending',
+    },
     isLoading: false,
-    error: null
+    error: null,
+    movieSearchCache: {}, 
 };
 
 export const reducer: Reducer<MovieListState> = (state: MovieListState, incomingAction: Action) => {
@@ -21,11 +33,27 @@ export const reducer: Reducer<MovieListState> = (state: MovieListState, incoming
                 isLoading: true
             };
         case 'RECEIVE_MOVIE_LIST':
+            var newResults = {
+                movies: action.movies,
+                totalMoviesSearched: action.totalMoviesSearched,
+            };
             return {
                 ...state,
                 movieSearchCriteria: state.movieSearchCriteria,
                 movies: action.movies,
-                isLoading: false
+                isLoading: false,
+                totalMoviesSearched: action.totalMoviesSearched,
+                movieSearchCache: { ...state.movieSearchCache, [JSON.stringify(state.movieSearchCriteria)]: newResults},
+            };
+        case 'SET_BROWSE_SEARCH_CRITERIA':
+            return {
+                ...state,
+                movieSearchCriteria: action.movieSearchCriteria,
+            };
+        case 'CLEAR_PREVIOUS_DATA':
+            return {
+                ...state,
+                totalMoviesSearched: null,
             };
         case 'SET_ERROR':
             return {

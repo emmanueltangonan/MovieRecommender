@@ -13,13 +13,11 @@ export const reducer: Reducer<MovieDetailsPageState> = (state: MovieDetailsPageS
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'GET_MOVIE_DETAILS':
-            console.log('GET_MOVIE_DETAILS')
             return {
                 ...state,
                 isLoading: true
             };
         case 'RECEIVE_MOVIE_DETAILS':
-            console.log('RECEIVE_MOVIE_DETAILS')
             return {
                 ...state,
                 selectedMovie: action.selectedMovie,

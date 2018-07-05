@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const merge = require('webpack-merge');
+const globImporter = require('node-sass-glob-importer');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
@@ -34,15 +35,32 @@ module.exports = (env) => {
     const clientBundleConfig = merge(sharedConfig(), {
         entry: { 'main-client': './ClientApp/boot-client.tsx' },
         module: {
+            //rules: [
+            //    {
+            //        enforce: 'pre',
+            //        test: /\.css?$/,
+            //        loader: 'import-glob-loader'
+            //    },
+            //    {
+            //        test: /\.scss$/,
+            //        use: ExtractTextPlugin.extract({ use: isDevBuild ? 'css-loader!sass-loader' : 'css-loader?minimize!sass-loader' })
+                    
+            //    },
+                
+            //]
             rules: [
                 {
-                    enforce: 'pre',
-                    test: /\.css?$/,
-                    loader: 'import-glob-loader'
-                },
-                {
-                    test: /\.css$/,
-                    use: ExtractTextPlugin.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' })
+                    test: /\.scss$/,
+                    use: ExtractTextPlugin.extract([
+                        {
+                            loader: isDevBuild ? 'css-loader' : 'css-loader?minimize'
+                        }, {
+                            loader: 'sass-loader',
+                            options: {
+                                importer: globImporter()
+                            }
+                        }
+                    ])
                 }
             ]
         },

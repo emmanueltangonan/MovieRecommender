@@ -6,7 +6,7 @@ import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import RandomMovie from './components/movies/RandomMovie';
 import MovieList from './components/movieList/MovieList';
-import MovieDetailsPage from './components/movieList/MovieDetailsPage';
+import MovieDetailsPage from './components/movieDetails/MovieDetailsPage';
 
 export const routes = <Layout>
     <Route exact path='/' component={ RandomMovie } />
