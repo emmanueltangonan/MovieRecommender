@@ -5,6 +5,7 @@ import { ApplicationState } from '../../store';
 import * as MovieDetailsPageState from '../../store/MovieDetailsPage';
 import MovieDetails from './MovieDetails';
 import { Loading } from '../shared/Stateless';
+import MovieTrailerPanel from './MovieTrailerPanel';
 
 type MovieDetailsPageProps =
     MovieDetailsPageState.MovieDetailsPageState        // ... state we've requested from the Redux store
@@ -14,43 +15,39 @@ type MovieDetailsPageProps =
 class MovieDetailsPage extends React.Component<MovieDetailsPageProps, {}> {
 
     componentDidMount() {
-        const imdbData = this.props.location.state.imdbData;
-        console.log(imdbData)
+        const imdbData = this.props.location.state && this.props.location.state.imdbData;
+        //console.log(imdbData)
         let tconst = this.props.match.params.tconst || 0;
-        tconst && this.props.getMovieDetails(tconst);
+        tconst && this.props.getMovieDetails(tconst, imdbData);
     }
 
-    //componentWillReceiveProps(nextProps: any) {
-    //    let tconst = nextProps.match.params.tconst || 0;
-    //    tconst && this.props.getMovieDetails(tconst);
-    //    console.log(nextProps)
-    //}
-
     public render() {
-        //const tconst = this.props.match.params.tconst
-        //if (tconst) {
-        //    console.log()
-        //    this.props.getMovieDetails(tconst);
-        //}
         const {
             selectedMovie,
             isLoading,
             error
         } = this.props;
-        
+        //console.log(selectedMovie)
         return (
-            <div className="col-sm-12 movie-detail-page-container">
-                {!selectedMovie
-                    ? <Loading />
-                    : <MovieDetails
-                            movie={selectedMovie}
-                            imdbData={selectedMovie.imdbData}
-                            isLoading={isLoading}
-                            error={error}
-                       />
+            <div>
+                <div className="col-sm-12 movie-detail-page-container">
+                    {!selectedMovie
+                        ? <Loading />
+                        : <MovieDetails
+                                movie={selectedMovie}
+                                isLoading={isLoading}
+                                error={error}
+                           />
+                    }
+                </div>
+                {   !this.props.isLoading &&
+                    selectedMovie
+                    &&
+                    <MovieTrailerPanel
+                        movie={selectedMovie}
+                    />
                 }
             </div>
-
         )
     }
 }

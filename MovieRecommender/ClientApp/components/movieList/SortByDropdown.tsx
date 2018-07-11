@@ -13,6 +13,9 @@ class SortByDropdown extends React.Component<{
             handleOnChange,
             sortBy,
         } = this.props;
+        const style = {
+            transform: `rotate(45deg)`
+        }
         return (
             <div className="sorted-by">
                 <div className="dropdown">
@@ -25,7 +28,7 @@ class SortByDropdown extends React.Component<{
                     >
                         Sorted by
                             &nbsp;<strong>{sortBy}</strong>
-                        &nbsp;<span><i className="fa fa-angle-down"></i></span>
+                        &ensp;<span><i className="fa fa-angle-down rotate"></i></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="sortBy">
                         {sortByOptionList.map((sortByOption: string, i: number) => (

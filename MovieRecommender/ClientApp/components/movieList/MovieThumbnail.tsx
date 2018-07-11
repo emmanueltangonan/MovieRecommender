@@ -6,6 +6,7 @@ import * as MovieListState from '../../store/MovieList';
 import * as imdb from 'imdb-api';
 import { Assets, ApiConstants, ObjPropertyConstants } from '../../constants/constants';
 import Error from '../../constants/errorConstants';
+import axios from 'axios';
 
 type MovieThumbnailProps = any 
     & MovieListState.MovieListState        // ... state we've requested from the Redux store
@@ -14,16 +15,17 @@ type MovieThumbnailProps = any
 
 class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
     _ismounted = false;
-    _isLoading = false;
     constructor(props: any) {
         super(props);
         this.state = {
             isMovieThumbnailHovered: false,
             movieThumbnailStyle: {},
+            movie: null,
             imdbData: null,
             error: '',
             [ObjPropertyConstants.IS_SEEN_BTN_HOVERED]: false,
             [ObjPropertyConstants.IS_UNINTERESTED_BTN_HOVERED]: false,
+            _isLoading: false
         }
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -37,7 +39,7 @@ class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
         const { movie } = this.props;
         this.getMoviePoster(movie.tconst);
         this._ismounted = true;
-        this._isLoading = true;
+        this.setState({ _isLoading: true, movie});
         this.getThumbnailStyle(false);
     }
  
@@ -45,17 +47,33 @@ class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
         this._ismounted = false;
     }
 
+    static getDerivedStateFromProps(nextProps:any, prevState:any) {
+        const { imdbData } = prevState;
+        const { movie } = nextProps;
+        if (imdbData.imdbID !== movie.tconst) {
+            return {
+                _isLoading: true,
+                movie
+            }
+        }
+    }
+
+    componentDidUpdate() {
+        const { imdbData } = this.state;
+        const { movie } = this.props;
+        if (!imdbData || imdbData.imdbID !== movie.tconst) {
+            this.getMoviePoster(movie.tconst);
+        }
+    }
+
     //componentWillReceiveProps(nextprops: any) {
     //    const { movie } = nextprops;
-    //    const { isMovieThumbnailHovered } = this.state;
-    //    if (movie && movie.imdbData) {
-    //        this.getThumbnailStyle(isMovieThumbnailHovered, movie);
-    //            //{
-    //                //background: `linear-gradient(to top left, transparent 50%, rgba(51, 51, 51, 0.7) 51%) 0 0/100% 30px no-repeat, url(${movie.imdbData.poster}) center/cover`
-    //                //background: `linear-gradient(to bottom, rgba(51, 51, 51, 0.7) 0%, rgba(51, 51, 51, 0.7) 100%) 0 0/100% 100% no-repeat, url(${movie.imdbData.poster}) center/cover`
-    //            //}
-            
-    //    }
+    //    this._isLoading = true;
+    //    this.getMoviePoster(movie.tconst);
+    //    //const { isMovieThumbnailHovered } = this.state;
+    //    //if (movie && movie.imdbData) {
+    //    //    this.getThumbnailStyle(isMovieThumbnailHovered);
+    //    //}
     //}
 
     handleMouseEnter() {
@@ -90,7 +108,7 @@ class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
     }
 
     getThumbnailStyle(isHovered: boolean) {
-        const { imdbData } = this.state;
+        const { imdbData, _isLoading } = this.state;
         let movieThumbnailStyle = {};
         if (!imdbData) {
             var loadingUrl = Assets.LOADING_GIF;
@@ -98,14 +116,14 @@ class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
                 background: `linear-gradient(to top left, transparent 50%, rgba(51, 51, 51, 0.7) 51%) 0 0/100% 30px no-repeat, url(${loadingUrl}) center/cover`
             }
         } else {
-            this._isLoading = false;
+            this.setState({ _isLoading: false });
             if (isHovered) {
                 movieThumbnailStyle = {
-                    background: `linear-gradient(to bottom, rgba(51, 51, 51, 0.7) 0%, rgba(51, 51, 51, 0.7) 100%) 0 0/100% 100% no-repeat, url(${imdbData.poster}) center/cover`,
+                    background: `linear-gradient(to bottom, rgba(51, 51, 51, 0.7) 0%, rgba(51, 51, 51, 0.7) 100%) 0 0/100% 100% no-repeat, url(${imdbData.Poster}) center/cover`,
                 }
             } else {
                 movieThumbnailStyle = {
-                    background: `linear-gradient(to top left, transparent 50%, rgba(51, 51, 51, 0.7) 51%) 0 0/100% 30px no-repeat, url(${imdbData.poster}) center/cover`
+                    background: `linear-gradient(to top left, transparent 50%, rgba(51, 51, 51, 0.7) 51%) 0 0/100% 30px no-repeat, url(${imdbData.Poster}) center/cover`
                 }
             }
         }
@@ -115,18 +133,38 @@ class MovieThumbnail extends React.Component<MovieThumbnailProps, any> {
     }
 
     getMoviePoster(tconst: string) {
-        const cli = new imdb.Client({ apiKey: ApiConstants.API_KEY, timeout: 3000 });
-        
-        cli.get({ 'id': tconst })
-            .then((imdbData: any) => {
+        const apiKey = ApiConstants.API_KEY;
+        const baseUrl = ApiConstants.API_BASE_URL;
+        const timeout = ApiConstants.API_CALL_TIMEOUT;
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = timeout;
+        httpClient.get(`${baseUrl}${apiKey}&i=${tconst}`)
+            .then((res) => {
+                //console.log(res)
                 if (this._ismounted) {
-                    this.setState({ imdbData });
+                    this.setState({ imdbData: res.data });
                     const { isMovieThumbnailHovered } = this.state;
                     this.getThumbnailStyle(isMovieThumbnailHovered);
                 }
-            }).catch((error) => {
-                this._ismounted && this.setState({ error: Error.ERROR_102 });
+            })
+            .catch((error) => {
+                if (error.code === 'ECONNABORTED') {
+                    console.log('Connection timed out... ', error)
+                    this._ismounted && this.setState({ error: 'Connection timed out... ' });
+                }
+                else
+                    this._ismounted && this.setState({ error: Error.ERROR_102 });
             });
+        //cli.get({ 'id': tconst })
+        //    .then((imdbData: any) => {
+        //        if (this._ismounted) {
+        //            this.setState({ imdbData });
+        //            const { isMovieThumbnailHovered } = this.state;
+        //            this.getThumbnailStyle(isMovieThumbnailHovered);
+        //        }
+        //    }).catch((error) => {
+        //        this._ismounted && this.setState({ error: Error.ERROR_102 });
+        //    });
     }
 
     public render() {

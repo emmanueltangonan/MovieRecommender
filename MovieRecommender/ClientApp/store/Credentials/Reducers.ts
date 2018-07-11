@@ -1,52 +1,58 @@
 ﻿import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from '../';
-import { MovieDetailsPageState } from './';
+import { CredentialsState } from './';
 import { KnownAction } from './Actions';
 
-const unloadedState: MovieDetailsPageState = {
-    selectedMovie: null,
+const unloadedState: CredentialsState = {
     isLoading: false,
+    loginCredentials: null,
+    apiCallError: null,
     error: null,
-    movieTrailers: null,
-    isTrailersLoading: false,
 };
 
-export const reducer: Reducer<MovieDetailsPageState> = (state: MovieDetailsPageState, incomingAction: Action) => {
+export const reducer: Reducer<CredentialsState> = (state: CredentialsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'GET_MOVIE_DETAILS':
+        case 'LOGIN':
             return {
                 ...state,
                 isLoading: true
             };
-        case 'RECEIVE_MOVIE_DETAILS':
+        case 'RECEIVE_LOGIN_RESULTS':
             return {
                 ...state,
-                selectedMovie: action.selectedMovie,
                 isLoading: false
             };
-        case 'GET_MOVIE_TRAILERS':
+        case 'LOGOUT':
+            return {
+                ...state,
+            };
+        case 'REGISTER':
             return {
                 ...state,
                 isTrailersLoading: true
             };
-        case 'RECEIVE_MOVIE_TRAILERS':
+        case 'SET_API_CALL_ERROR':
             return {
                 ...state,
-                movieTrailers: action.payload,
-                isTrailersLoading: false
+                apiCallError: action.payload.error,
+            };
+        case 'CLEAR_API_CALL_ERROR':
+            return {
+                ...state,
+                apiCallError: null,
             };
         case 'SET_ERROR':
             return {
                 ...state,
-                error: action.error
+                error: action.payload.error
             };
         case 'CLEAR_ERROR':
             return {
                 ...state,
                 error: null
             };
-        
+
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

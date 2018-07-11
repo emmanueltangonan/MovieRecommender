@@ -26,6 +26,10 @@ a.main-nav li .glyphicon {
     z-index: 1;
 }
 
+div img {
+    max-width: 100%;
+    max-height: 100%;
+}
 
 div.loader-div {
     width: 100%;
@@ -39,7 +43,7 @@ div.loader-div {
     align-items: center;
 }
 
-div.loader-div img{
+div.loader-div img, div img{
     -webkit-user-drag: none;
     user-select: none;
     -moz-user-select: none;

@@ -1,5 +1,5 @@
 ﻿/* Search Criteria */
-div.dropdown button {
+.spinner-criteria-elem-wrapper div.dropdown button {
     width: 100%;
     margin: 10px 0;
     overflow: hidden;
@@ -43,7 +43,7 @@ div.sorted-by {
 
 div.order-by {
     float: right;
-    width: 120px;
+    width: 60px;
 }
 
 div.dropdown button.sort-by-btn,
@@ -70,3 +70,21 @@ div.display-options ul.dropdown-menu {
     left: auto;
     min-width: 100px;
 }
+
+.dropdown.open > button > span .rotate {
+    transform: scale(1.2) rotate(180deg);
+}
+i.rotate {
+    transform: scale(1.2);
+    transition: all 200ms ease-in-out;
+}
+
+.dropdown.open > button > span.rotate {
+    transform: scale(1.3) rotate(180deg);
+}
+
+span.rotate {
+    transform: scale(1.3);
+    transition: all 200ms ease-in-out;
+}
+

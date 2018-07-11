@@ -2,12 +2,11 @@
 import { actionCreators as ac } from './Actions';
 import { reducer as r } from './Reducers';
 
-export interface MovieDetailsPageState {
+export interface CredentialsState {
     isLoading: boolean;
-    selectedMovie: any;
+    loginCredentials: any;
+    apiCallError: any;
     error: any;
-    movieTrailers: any;
-    isTrailersLoading: any;
 }
 
 export const actionCreators: any = ac;

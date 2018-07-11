@@ -7,3 +7,7 @@ export const Loading: React.StatelessComponent<{}> = () => (
     </div>
 )
 
+export const MiniLoading: React.StatelessComponent<{}> = () => (
+    <img src={Assets.MINI_LOADING_GIF} />
+)
+

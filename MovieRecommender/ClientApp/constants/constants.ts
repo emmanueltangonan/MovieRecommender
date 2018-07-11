@@ -1,14 +1,25 @@
 ﻿export class ApiConstants {
-    public static readonly API_BASE_URL = 'https';
+    public static readonly API_BASE_URL = 'http://www.omdbapi.com/?apikey=';
     public static readonly API_KEY = '5330a888';
+    public static readonly API_KEY_TMDB = '9d2bff12ed955c7f1f74b83187f188ae';
+    public static readonly API_BASE_URL_TMDB = 'https://api.themoviedb.org/3';
+    public static readonly API_ACTION_TMDB_FIND = 'find';
+    public static readonly API_CALL_TIMEOUT = 10000;
+}
+
+export class Dimensions {
+    public static readonly YOUTUBE_HEIGHT = 390;
+    public static readonly YOUTUBE_WIDTH = 640;
 }
 
 export class SharedConstants {
     public static readonly ALL = 'All';
+    public static readonly REQUEST_VERIFICATION_TOKEN = 'RequestVerificationToken';
 }
 
 export class Assets {
     public static readonly LOADING_GIF: any = require('../assets/Loading.gif');
+    public static readonly MINI_LOADING_GIF: any = require('../assets/mini-loading.gif');
     public static readonly RATING_STAR: any = require('../assets/rating-star.png');
     public static readonly IMDB_LOGO: any = require('../assets/imdb-logo.svg');
     public static readonly ROTTEN_TOM_LOGO: any = require('../assets/rotten-tomatoes-logo.png');
@@ -35,10 +46,12 @@ export class SearchMovieConstants {
     public static readonly SORT_OPTION_LIST = ['Title', 'Rating', 'Year'];
 
     public static readonly SEARCH_KEYWORD = 'searchKeyword';
-    public static readonly SEARCH_TEXTBOX_PLACEHOLDER = 'Movie Title or Keyword';
+    public static readonly SEARCH_TEXTBOX_PLACEHOLDER = 'Movie title or keyword';
 
     public static readonly ORDER = 'order';
-    public static readonly ORDER_LIST = ['Ascending', 'Descending'];
+    public static readonly ORDER_ASC = 'Ascending';
+    public static readonly ORDER_DESC = 'Descending';
+    public static readonly ORDER_LIST = [SearchMovieConstants.ORDER_ASC, SearchMovieConstants.ORDER_DESC];
 
     public static readonly STATUS = 'status';
     public static readonly STATUS_LIST = [SharedConstants.ALL, 'Watched', 'Not Watched'];

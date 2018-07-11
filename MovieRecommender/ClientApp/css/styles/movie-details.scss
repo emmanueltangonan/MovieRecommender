@@ -1,4 +1,58 @@
 ﻿
+div.sugg-movie-container {
+    padding: 0 15px 15px 15px;
+    background-color: white;
+    margin: 15px 0;
+    min-height: 500px;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+
+div.movie-detail-page-container {
+    padding: 15px 15px 15px 15px;
+    background-color: white;
+    margin: 15px 0;
+    min-height: 500px;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+
+div.movie-trailer-container {
+    padding: 15px 30px 15px 30px;
+    background-color: white;
+    margin: 15px 0;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+div.loader-panel {
+    height: 40px;
+}
+
+div.loader-panel img {
+    padding: 5px;
+}
+
+div.youtube-videos-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content:space-around;
+}
+div.youtube-videos-container > span > iframe {
+
+}
+
+div.movie-details-right {
+    padding: 0 0 0 25px;
+}
+
+div.movie-details {
+    min-height: 400px;
+    padding: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.movie-details .row {
+    margin: 0;
+}
+
 .borderless td, .borderless th {
     border: none !important;
 }
@@ -15,35 +69,8 @@ div.img-container {
     text-align: center;
 }
 
-div img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-div.sugg-movie-container {
-    padding: 0 15px 15px 15px;
-    background-color: white;
-    margin: 15px 0;
-    min-height: 500px;
-    box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
-}
-
-div.movie-details-right {
-    padding: 0 0 0 25px;
-}
-
 span.grey-out {
     color: dimgray;
-}
-
-div.movie-details {
-    min-height: 400px;
-    padding: 15px;
-    font-family: 'Arial', sans-serif;
-}
-
-.movie-details .row {
-    margin: 0;
 }
 
 img.rating-logo {
@@ -153,6 +180,14 @@ $buttons-width: 50px;
     width: 150px;
 }
 
+div.container-title{
+    padding: 0 15px 15px 15px;
+}
+
+div.container-title span {
+    font-weight: bold;
+    font-size: 20px;
+}
 
 @media (max-width: 767px) {
     h1 .movie-title {
@@ -166,11 +201,18 @@ $buttons-width: 50px;
     div.movie-details-right {
         padding: 0;
     }
+
     .movie-action-icons button.btn {
         width: 150px;
         float: none;
     }
-    .movie-action-icons-holder{
-       text-align: center;
+
+    .movie-action-icons-holder {
+        text-align: center;
+    }
+
+    div.youtube-videos-container > span > iframe {
+        width: 300px;
+        height: 200px;
     }
 }

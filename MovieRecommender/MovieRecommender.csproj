@@ -22,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\login\LoginPage.tsx" />
+    <None Remove="ClientApp\components\movieDetails\MovieTrailer.tsx" />
+    <None Remove="ClientApp\components\movieDetails\MovieTrailerPanel.tsx" />
     <None Remove="ClientApp\constants\errorConstants.ts" />
     <None Remove="ClientApp\components\movieDetails\MovieFlagButtons.tsx" />
     <None Remove="ClientApp\components\movieList\BrowseCriteriaBox.tsx" />
@@ -42,6 +45,9 @@
     <None Remove="ClientApp\components\shared\Stateless.tsx" />
     <None Remove="ClientApp\components\SuggestedMovie.tsx" />
     <None Remove="ClientApp\constants.ts" />
+    <None Remove="ClientApp\store\Credentials\Actions.ts" />
+    <None Remove="ClientApp\store\Credentials\index.ts" />
+    <None Remove="ClientApp\store\Credentials\Reducers.ts" />
     <None Remove="ClientApp\store\MovieDetailsPage\Actions.ts" />
     <None Remove="ClientApp\store\MovieDetailsPage\index.ts" />
     <None Remove="ClientApp\store\MovieDetailsPage\Reducers.ts" />
@@ -55,12 +61,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\login\LoginPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieDetails\MovieTrailer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\movieDetails\MovieTrailerPanel.tsx" />
     <TypeScriptCompile Include="ClientApp\constants\errorConstants.ts" />
     <TypeScriptCompile Include="ClientApp\components\movieDetails\MovieFlagButtons.tsx" />
     <TypeScriptCompile Include="ClientApp\components\movieList\DisplayOptions.tsx" />
     <TypeScriptCompile Include="ClientApp\components\movieList\OrderDropdown.tsx" />
     <TypeScriptCompile Include="ClientApp\components\movieList\SortByDropdown.tsx" />
     <TypeScriptCompile Include="ClientApp\constants\constants.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Credentials\Actions.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Credentials\index.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Credentials\Reducers.ts" />
     <TypeScriptCompile Include="modules.d.ts" />
     <TypeScriptCompile Include="ClientApp\components\movieList\BrowseCriteriaBox.tsx" />
     <TypeScriptCompile Include="ClientApp\components\movieDetails\MovieDetailsPage.tsx" />

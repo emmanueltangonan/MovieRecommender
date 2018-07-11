@@ -30,7 +30,7 @@ class MovieStatusDropDown extends React.Component<{
                     >
                         {title}
                         &nbsp;
-                        <span className="caret"></span>
+                        <span className="caret rotate"></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                         {statusList.map((status: string, i: number) => (

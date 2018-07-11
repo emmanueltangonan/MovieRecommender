@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -146,11 +147,13 @@ namespace MovieRecommender.Controllers
         }
 
         [HttpPost("[action]")]
-        public Movie RandomMovie([FromBody] RandomMovieSearchCriteria movieSearchCriteria)
+        public IActionResult RandomMovie([FromBody] RandomMovieSearchCriteria movieSearchCriteria)
         {
             Movie result = null;
             try
             {
+                if (movieSearchCriteria == null) return BadRequest();
+
                 var query = _context.Movie
                         .Where(
                             movie => movie.TitleType == "movie"
@@ -174,12 +177,13 @@ namespace MovieRecommender.Controllers
                 result = query.OrderBy(o => Guid.NewGuid())
                         .First();
             }
-            catch (Exception)
+            catch (SqlException e)
             {
-                result = null;
+                return StatusCode(500);
             }
-            
-            return result;
+
+            if (result == null) return NoContent();
+            else return Ok(result);
 
         }
 

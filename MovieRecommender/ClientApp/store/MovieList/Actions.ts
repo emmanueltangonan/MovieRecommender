@@ -43,12 +43,9 @@ export const actionCreators = {
         const cache = getState().movieList.movieSearchCache;
         const cacheSearchResult = cache[JSON.stringify(movieSearchCriteria)];
         if (cacheSearchResult) {
-            console.log(cacheSearchResult)
+            console.log('found in cache:', cacheSearchResult)
             dispatch({ type: 'RECEIVE_MOVIE_LIST', movies: cacheSearchResult.movies, totalMoviesSearched: cacheSearchResult.totalMoviesSearched });
             dispatch({ type: 'CLEAR_ERROR' });
-            if (cacheSearchResult.error) {
-                dispatch({ type: 'SET_ERROR', error: cacheSearchResult.error });
-            }
             return;
         }
         let fetchTask = fetch(`api/ImdbData/Movies`, {
@@ -65,6 +62,7 @@ export const actionCreators = {
             .then(data => {
                 console.log(data);
                 if (!data || !data.data || !data.data.length) {
+                    dispatch({ type: 'SET_ERROR', error: "No movies found." });
                     dispatch({ type: 'RECEIVE_MOVIE_LIST', movies: [], totalMoviesSearched: 0 });
                 } else {
                     dispatch({ type: 'RECEIVE_MOVIE_LIST', movies: data.data, totalMoviesSearched: data.totalItems});

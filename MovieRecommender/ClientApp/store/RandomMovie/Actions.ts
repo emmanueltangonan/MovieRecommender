@@ -2,6 +2,8 @@
 import { AppThunkAction } from '../';
 import { fetch, addTask } from 'domain-task';
 import * as imdb from 'imdb-api';
+import { ApiConstants } from '../../constants/constants';
+import axios from 'axios';
 
 interface RequestRandomMovieAction {
     type: 'REQUEST_RANDOM_MOVIE';
@@ -34,39 +36,56 @@ export type KnownAction = RequestRandomMovieAction | ReceiveRandomMovieAction
 // ACTION CREATORS
 export const actionCreators = {
     requestRandomMovie: (movieSearchCriteria: RandomMovieSearchCriteria): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        console.log(movieSearchCriteria)
+        //console.log(movieSearchCriteria)
         let fetchTask = fetch(`api/ImdbData/RandomMovie`,
             {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(movieSearchCriteria)
             })
-            .then(response => {
-                if (response.status == 204) {
-                    return null;
+            .then(res => {
+                //console.log(res)
+                if (!res) {
+                    return 500;
+                }else if (res.status === 200) {
+                    return res.json() as any;
                 }
-                return response.json() as any;
+                return res.status;
             })
             .then(data => {
-                console.log(data);
-                if (!data) {
+                //console.log(data);
+                if (data == 204) {
                     dispatch({ type: 'SET_ERROR', error: 'Whoops! No movies matched those criteria...' });
+                } else if (data == 500) {
+                    dispatch({ type: 'SET_ERROR', error: 'Whoops! Server is down at the moment...' });
                 } else {
-                    const movieImdbId = data.tconst;
-                    //const imdbApiUrl = `https://www.omdbapi.com/?i=${movieImdbId}&apikey=5330a888`;
-                    
-                    //fetch(imdbApiUrl)
-                    //    .then(response => response.json() as any)
-                    console.log('Requesting from external API...');
-                    const cli = new imdb.Client({ apiKey: '5330a888', timeout: 3000 });
-                    cli.get({ 'id': movieImdbId })
-                        .then((imdbData: any) => {
-                            data = { ...data, imdbData }
-                            console.log(data)
-
+                    const tconst = data.tconst;
+                    const apiKey = ApiConstants.API_KEY;
+                    const baseUrl = ApiConstants.API_BASE_URL;
+                    const timeout = ApiConstants.API_CALL_TIMEOUT;
+                    const httpClient = axios.create();
+                    httpClient.defaults.timeout = timeout;
+                    let imdbApiCall = httpClient.get(`${baseUrl}${apiKey}&i=${tconst}`)
+                        .then((res) => {
+                            data = { ...data, imdbData: res.data };
                             dispatch({ type: 'RECEIVE_RANDOM_MOVIE', randomMovie: data });
                             dispatch({ type: 'CLEAR_ERROR' });
-                        }).catch(() => dispatch({ type: 'SET_ERROR', error: 'Something went wrong with the external API call...' }));
+                        })
+                        .catch((error) => {
+                            if (error.code === 'ECONNABORTED')
+                                dispatch({ type: 'SET_ERROR', error: 'Connection timed out... ' + error });
+                            else
+                                dispatch({ type: 'SET_ERROR', error: 'Something went wrong with the external API call... ' + error });
+                        });
+                    //const cli = new imdb.Client({ apiKey: '5330a888', timeout: 3000 });
+                    //cli.get({ 'id': movieImdbId })
+                    //    .then((imdbData: any) => {
+                    //        data = { ...data, imdbData }
+                    //        console.log(data)
+
+                    //        dispatch({ type: 'RECEIVE_RANDOM_MOVIE', randomMovie: data });
+                    //        dispatch({ type: 'CLEAR_ERROR' });
+                    //    }).catch((error) => dispatch({ type: 'SET_ERROR', error: 'Something went wrong with the external API call... ' + error }));
                 }
             }).catch(() => dispatch({ type: 'SET_ERROR', error: 'Something went wrong with the local API call...' }));
 

@@ -46,10 +46,10 @@ class MovieList extends React.Component<MovieListProps, {}> {
         const { movies, error, totalMoviesSearched } = this.props;
         
         return (
-            
             <div className="col-sm-12 movie-list-container">
                 <BrowseCriteriaBox />
                 <DisplayOptions />
+                <Paginator />
                 <div className="movie-thumbnails-wrapper">
                     {this.props.isLoading
                         ? <Loading />

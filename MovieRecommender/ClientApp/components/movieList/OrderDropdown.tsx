@@ -23,8 +23,14 @@ class OrderDropdown extends React.Component<{
                         aria-haspopup="true"
                         aria-expanded="true"
                     >
-                        <strong>{order}</strong>
-                        &nbsp;<span><i className="fa fa-angle-down"></i></span>
+                        
+                            &nbsp;
+                            {order == SearchMovieConstants.ORDER_ASC
+                                ? <span><i className="fa fa-arrow-up"></i></span>
+                                : <span><i className="fa fa-arrow-down"></i></span>
+                            }
+                        &ensp;
+                        <span><i className="fa fa-angle-down rotate"></i></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="order">
                         {orderList.map((orderOption: string, i: number) => (

@@ -20,6 +20,8 @@ class BrowseCriteriaBox extends React.Component<BrowseCriteriaBoxProps, {}> {
         super(props);
         this.handleDropDownOnChange = this.handleDropDownOnChange.bind(this);
         this.handleInputTextOnChange = this.handleInputTextOnChange.bind(this);
+        this.handleOnSearch = this.handleOnSearch.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleDropDownOnChange(e: any, criterion: string) {
@@ -46,13 +48,29 @@ class BrowseCriteriaBox extends React.Component<BrowseCriteriaBoxProps, {}> {
         let value = e.currentTarget.value;
         switch (criterion) {
             case SearchMovieConstants.SEARCH_KEYWORD:
-                value = value.toLowerCase();
                 break;
         }
         this.props.setBrowseSearchCriteria({
             ...this.props.movieSearchCriteria,
             [criterion]: value
         });
+    }
+
+    handleOnSearch() {
+        // reset page whenever search button is clicked
+        const { movieSearchCriteria } = this.props;
+        var newMovieSearchCriteria = {
+            ...movieSearchCriteria,
+            page: 1
+        }
+        this.props.requestMovieList(newMovieSearchCriteria);
+    }
+
+    handleKeyPress(target: any) {
+        // Enter key
+        if (target.charCode == 13) {
+            this.handleOnSearch();
+        }
     }
 
     public render() {
@@ -93,11 +111,12 @@ class BrowseCriteriaBox extends React.Component<BrowseCriteriaBoxProps, {}> {
                     <SearchInputText
                         searchKeyword={movieSearchCriteria.searchKeyword}
                         handleOnChange={this.handleInputTextOnChange}
+                        handleKeyPress={this.handleKeyPress}
                     />
                     <div className="col-sm-3">
                         <button
                             className="btn btn-success spinner-button pull-right"
-                            onClick={() => this.props.requestMovieList(movieSearchCriteria)}
+                            onClick={() => this.handleOnSearch()}
                             title={title}
                         > {title} </button>
                     </div>

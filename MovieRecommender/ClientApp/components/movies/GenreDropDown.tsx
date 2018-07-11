@@ -70,7 +70,7 @@ class GenreDropDown extends React.Component<{
                     >
                         {title}
                             &nbsp; 
-                        <span className="caret"></span>
+                        <span className="caret rotate"></span>
                     </button>
                     <ul className="dropdown-menu horizontal-view" aria-labelledby="dropdownMenu1">
                         <li><a onClick={(e) => { handleOnChange(e, criterion) }} href="#">All</a></li>

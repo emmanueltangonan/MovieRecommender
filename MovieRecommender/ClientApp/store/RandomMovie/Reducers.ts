@@ -4,7 +4,7 @@ import { RandomMovieState } from './';
 import { KnownAction } from './Actions';
 
 const unloadedState: RandomMovieState = {
-    randomMovie: {},
+    randomMovie: null,
     movieSearchCriteria: { genre: '', year: null, rating: null },
     isLoading: false,
     error: null

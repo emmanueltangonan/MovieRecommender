@@ -37,13 +37,17 @@ export const reducer: Reducer<MovieListState> = (state: MovieListState, incoming
                 movies: action.movies,
                 totalMoviesSearched: action.totalMoviesSearched,
             };
+            //dont add to cache if returned 0 results or in error
+            var newMovieSearchCache = state.error
+                ? { ...state.movieSearchCache }
+                : { ...state.movieSearchCache, [JSON.stringify(state.movieSearchCriteria)]: newResults };
             return {
                 ...state,
                 movieSearchCriteria: state.movieSearchCriteria,
                 movies: action.movies,
                 isLoading: false,
                 totalMoviesSearched: action.totalMoviesSearched,
-                movieSearchCache: { ...state.movieSearchCache, [JSON.stringify(state.movieSearchCriteria)]: newResults},
+                movieSearchCache: newMovieSearchCache,
             };
         case 'SET_BROWSE_SEARCH_CRITERIA':
             return {
